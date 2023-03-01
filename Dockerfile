@@ -22,7 +22,7 @@ RUN openssl req -new \
     -nodes \
     -out /etc/nginx/ssl/nginx.pem \
     -keyout /etc/nginx/ssl/nginx.key \
-    -subj "/C=JP/ST=MyState/L=MyLocality/O=MyOrg/OU=dev/CN=localhost" \
+    -subj "/C=JP/ST=MyState/L=MyLocality/O=MyOrg/OU=dev/CN=localhost.internal" \
     -addext "subjectAltName = DNS:8.8.8.8,IP:127.0.0.1,IP:192.168.1.1" \
     -addext "extendedKeyUsage = serverAuth"
 

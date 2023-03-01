@@ -2,7 +2,7 @@
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/esplo/docker-local-ssl-termination-proxy.svg?style=for-the-badge)](https://hub.docker.com/r/esplo/docker-local-ssl-termination-proxy/)
 
-A simple SSL Termination Proxy for accessing https://localhost.
+A simple SSL Termination Proxy for accessing https://localhost.internal.
 
 This proxy is easy to use (1 command to launch) and nothing is installed on your local machine thanks to Docker.
 
@@ -12,7 +12,7 @@ This proxy is easy to use (1 command to launch) and nothing is installed on your
 
 ## Usage
 
-Assume that your application is running on `http://localhost:8000`, the following command makes us accept requests to `https://localhost`.
+Assume that your application is running on `http://localhost.internal:8000`, the following command makes us accept requests to `https://localhost.internal`.
 
 ### Mac OSX
 
@@ -42,7 +42,7 @@ You need to make sure that `host.docker.internal` is resolved properly inside do
 ### Test connection
 
 ```bash
-$ curl -k https://localhost/
+$ curl -k https://localhost.internal/
 ```
 
 ### Locally-trusted development certificates
@@ -52,7 +52,7 @@ The container can be configured to use custom certificates with the `SSL_CERT` a
 ```bash
 $ mkdir -p ssl
 $ mkcert -install
-$ mkcert --cert-file ssl/localhost.pem --key-file ssl/localhost.key localhost 127.0.0.1 ::1
+$ mkcert --cert-file ssl/localhost.internal.pem --key-file ssl/localhost.internal.key localhost.internal 127.0.0.1 ::1
 ```
 
 and mount them to the container using [bind mounts](https://docs.docker.com/storage/bind-mounts/):
@@ -60,8 +60,8 @@ and mount them to the container using [bind mounts](https://docs.docker.com/stor
 ```bash
 $ docker run -it \
   -e 'PORT=8000' \
-  -e 'SSL_CERT=localhost.pem' \
-  -e 'SSL_KEY=localhost.key' \
+  -e 'SSL_CERT=localhost.internal.pem' \
+  -e 'SSL_KEY=localhost.internal.key' \
   -p 443:443 \
   -v "$(pwd)"/ssl:/etc/nginx/ssl/ \
   --rm \

@@ -14,7 +14,7 @@ http {
 
   server {
     listen 443 ssl;
-    server_name localhost;
+    server_name localhost.internal;
 
     ssl_certificate         /etc/nginx/ssl/${SSL_CERT};
     ssl_certificate_key     /etc/nginx/ssl/${SSL_KEY};
